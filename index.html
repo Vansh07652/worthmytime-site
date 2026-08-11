@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#12201b">
+    <meta name="description" content="Turn prices into the work time they really cost with a private, offline-first calculator.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Worth My Time">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./icons/icon-180.png">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Worth My Time</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#calculator">Skip to calculator</a>
+
+    <header class="site-header">
+      <div class="brand">
+        <img src="./icons/icon.svg" width="48" height="48" alt="" aria-hidden="true">
+        <div>
+          <p class="eyebrow">Private purchase calculator</p>
+          <h1>Worth My Time</h1>
+        </div>
+      </div>
+      <p class="subtitle">Turn prices into the work time they really cost.</p>
+      <p class="privacy-note"><span aria-hidden="true">●</span> Private by design — your data stays on this device.</p>
+    </header>
+
+    <main id="calculator" class="app-shell">
+      <form id="calculator-form" novalidate>
+        <section class="card pay-card" aria-labelledby="pay-heading">
+          <div class="section-heading">
+            <div>
+              <p class="step-label">Step 1</p>
+              <h2 id="pay-heading">Add your pay</h2>
+            </div>
+            <button class="text-button" id="reset-button" type="button">Reset</button>
+          </div>
+
+          <fieldset class="field-group">
+            <legend>Pay type</legend>
+            <div class="segmented-control">
+              <label><input type="radio" name="payType" value="hourly" checked><span>Hourly pay</span></label>
+              <label><input type="radio" name="payType" value="salary"><span>Annual salary</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-grid">
+            <div class="field" id="hourly-field">
+              <label for="hourly-pay">Hourly pay</label>
+              <div class="money-input"><span class="currency-symbol" aria-hidden="true">$</span><input id="hourly-pay" name="hourlyPay" type="text" inputmode="decimal" autocomplete="off" value="20.00" aria-describedby="hourly-help hourly-error"></div>
+              <p class="field-help" id="hourly-help">Your gross hourly rate.</p>
+              <p class="field-error" id="hourly-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field" id="salary-field" hidden>
+              <label for="annual-salary">Annual salary</label>
+              <div class="money-input"><span class="currency-symbol" aria-hidden="true">$</span><input id="annual-salary" name="annualSalary" type="text" inputmode="decimal" autocomplete="off" value="60000.00" aria-describedby="salary-help salary-error"></div>
+              <p class="field-help" id="salary-help">Converted using your schedule below.</p>
+              <p class="field-error" id="salary-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="hours-per-week">Hours per week</label>
+              <input id="hours-per-week" name="hoursPerWeek" type="number" min="0.1" max="168" step="0.5" value="40" inputmode="decimal" aria-describedby="hours-error">
+              <p class="field-error" id="hours-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field" id="weeks-field" hidden>
+              <label for="weeks-per-year">Weeks worked per year</label>
+              <input id="weeks-per-year" name="weeksPerYear" type="number" min="1" max="53" step="1" value="52" inputmode="numeric" aria-describedby="weeks-error">
+              <p class="field-error" id="weeks-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="currency">Currency</label>
+              <select id="currency" name="currency">
+                <option value="USD">USD — US dollar</option>
+                <option value="CAD">CAD — Canadian dollar</option>
+                <option value="GBP">GBP — British pound</option>
+                <option value="EUR">EUR — Euro</option>
+                <option value="AUD">AUD — Australian dollar</option>
+                <option value="INR">INR — Indian rupee</option>
+                <option value="JPY">JPY — Japanese yen</option>
+              </select>
+              <p class="field-help">Formatting only; no exchange rates.</p>
+            </div>
+          </div>
+
+          <div class="tax-panel">
+            <label class="switch-row" for="after-tax">
+              <span><strong>Use after-tax pay</strong><small>Estimate the rate that reaches your pocket.</small></span>
+              <span class="switch"><input id="after-tax" name="afterTax" type="checkbox" checked><span class="switch-track" aria-hidden="true"></span></span>
+            </label>
+            <div class="field compact-field" id="tax-field">
+              <label for="tax-percent">Estimated tax and deductions</label>
+              <div class="suffix-input"><input id="tax-percent" name="taxPercent" type="number" min="0" max="99.9" step="0.1" value="25" inputmode="decimal" aria-describedby="tax-help tax-error"><span aria-hidden="true">%</span></div>
+              <p class="field-help" id="tax-help">A personal estimate, not a tax calculation.</p>
+              <p class="field-error" id="tax-error" aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card purchase-card" aria-labelledby="purchase-heading">
+          <div class="section-heading"><div><p class="step-label">Step 2</p><h2 id="purchase-heading">Enter a purchase</h2></div></div>
+          <div class="field">
+            <label for="item-name">Item name <span class="optional">Optional</span></label>
+            <input id="item-name" name="itemName" type="text" maxlength="80" autocomplete="off" placeholder="e.g., New headphones">
+          </div>
+          <div class="field price-field">
+            <label for="item-price">Item price</label>
+            <div class="money-input large-money-input"><span class="currency-symbol" aria-hidden="true">$</span><input id="item-price" name="itemPrice" type="text" inputmode="decimal" autocomplete="off" value="0.00" aria-describedby="price-error"></div>
+            <p class="field-error" id="price-error" aria-live="polite"></p>
+          </div>
+          <button class="primary-button" type="submit">Calculate work time</button>
+        </section>
+      </form>
+
+      <section class="result-card" id="result-card" aria-labelledby="result-heading" aria-live="polite">
+        <p class="step-label gold">Step 3 · Your time cost</p>
+        <h2 id="result-heading">Enter a price to see its time cost.</h2>
+        <p class="rate-line" id="rate-line">Your take-home rate will appear here.</p>
+        <div class="metrics" id="metrics" hidden>
+          <div><span id="exact-hours">—</span><small>exact hours</small></div>
+          <div><span id="workdays">—</span><small>workdays</small></div>
+          <div><span id="workweeks">—</span><small>workweeks</small></div>
+        </div>
+        <p class="insight" id="insight">Your result is an estimate based on the details you enter.</p>
+        <div class="result-actions">
+          <button class="secondary-button" id="share-button" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0-12 4 4m-4-4L8 7M5 13v6h14v-6"/></svg><span>Share result</span></button>
+          <span class="action-status" id="share-status" role="status"></span>
+        </div>
+      </section>
+
+      <section class="card history-card" aria-labelledby="history-heading">
+        <div class="section-heading">
+          <div><p class="step-label">Saved locally</p><h2 id="history-heading">Recent calculations</h2></div>
+          <button class="text-button danger" id="clear-history-button" type="button" hidden>Clear history</button>
+        </div>
+        <p class="empty-state" id="history-empty">Your latest 10 calculations will appear here.</p>
+        <ul class="history-list" id="history-list"></ul>
+      </section>
+
+      <section class="how-it-works" aria-labelledby="how-heading">
+        <p class="step-label">A quick perspective</p>
+        <h2 id="how-heading">How it works</h2>
+        <ol>
+          <li><span>1</span><strong>Add your pay</strong></li>
+          <li><span>2</span><strong>Enter a price</strong></li>
+          <li><span>3</span><strong>See the work time it costs</strong></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer><p>Worth My Time is a personal estimate, not financial advice.</p><a href="./privacy-policy.html">Privacy policy</a></footer>
+    <noscript><div class="noscript">Worth My Time needs JavaScript enabled to calculate your work time.</div></noscript>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

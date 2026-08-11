@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Worth My Time clock and dollar icon</title>
+  <rect width="512" height="512" rx="112" fill="#12201b"/>
+  <circle cx="256" cy="256" r="154" fill="#0b1411" stroke="#d8b76f" stroke-width="22"/>
+  <path d="M256 142v118l74 52" fill="none" stroke="#f4efe3" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="256" r="16" fill="#72b987"/>
+  <circle cx="376" cy="368" r="72" fill="#72b987" stroke="#12201b" stroke-width="12"/>
+  <path d="M389 341c-8-8-27-10-36-2-12 11-3 24 14 27 19 4 29 12 25 26-5 17-32 20-48 7m22-77v96" fill="none" stroke="#0b1411" stroke-width="14" stroke-linecap="round"/>
+</svg>
